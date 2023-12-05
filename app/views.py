@@ -13,41 +13,35 @@ from rest_framework.response import Response
 def index(request):
     return HttpResponse("<h1> Hola Mundo en Django </h1>")
 
-
-def get_user(request):
-    return HttpResponse('<h2> Listado de Usuarios </h2>')
-
- #Son los metodos sin editar que mostro el profe
 @api_view(['GET'])
-def get_movies(request):
-    
-    Lista todos las peliculas
+def get_user(request):
+    # Lista todos los Usuarios
     
     # se buscan todos los registros guardados en la base
-    movies = Movie.objects.all()  # SELECT * FROM app_movie
+    Usuarios = Usuario.objects.all() 
     # cuando estás serializando múltiples instancias de un modelo
-    serializer = serializers.MovieSerializer(movies, many=True)
+    serializer = serializers.UsuarioSerializer(Usuarios, many=True)
     # Response es una clase que me permite devolver una respuesta
     # que cumple con los estandares de API-REST
     return Response(serializer.data)
 
 
 @api_view(['POST'])
-def create_movie(request):
+def create_Usuario(request):
     # Se seriala los datos recibidos desde el formulario
-    serializer = serializers.MovieSerializer(data=request.data)
+    serializer = serializers.UsuarioSerializer(data=request.data)
     # Se ejecutan las validaciones
     if serializer.is_valid():
         # Se registra en base de datos
         serializer.save()
         # Se genera la respuesta que deseamos devolver
         response = {'status': 'Ok',
-                    'message': 'Pelicula creada exitosamente',
+                    'message': 'Usuario creado exitosamente',
                     'data': serializer.data}
         return Response(data=response, status=status.HTTP_201_CREATED)
 
     response = {'status': 'Error',
-                'message': 'No se pudo crear la pelicula',
+                'message': 'No se pudo crear el Ususario',
                 'errors': serializer.errors}
     return Response(data=response, status=status.HTTP_400_BAD_REQUEST)
 
@@ -55,8 +49,8 @@ def create_movie(request):
 """@api_view(['GET'])
  def detail_movie(request, id):
     """
-    Muestra una pelicula.
-    """
+    #Muestra una pelicula.
+"""
     try:
         # Se busca la pelicula en base por el id
         movie = Usuario.objects.get(pk=id)
@@ -70,8 +64,8 @@ def create_movie(request):
 @api_view(['DELETE'])
 def delete_movie(request, id):
     """
-    Eliminar una pelicula.
-    """
+    #Eliminar una pelicula.
+"""
     try:
         movie = Movie.objects.get(pk=id)
     except Movie.DoesNotExist:
@@ -84,8 +78,8 @@ def delete_movie(request, id):
 @api_view(['PUT'])
 def update_movie(request, id):
     """
-    Actualiza una pelicula.
-    """
+    #Actualiza una pelicula.
+"""
     try:
         movie = Movie.objects.get(pk=id)
     except Movie.DoesNotExist:
@@ -103,4 +97,4 @@ def update_movie(request, id):
                 'message': 'No se pudo modificar la pelicula',
                 'errors': serializer.errors}
     return Response(data=response, status=status.HTTP_400_BAD_REQUEST)
- """ """
+ """ 
