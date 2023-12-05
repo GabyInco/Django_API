@@ -13,12 +13,13 @@ from rest_framework.response import Response
 def index(request):
     return HttpResponse("<h1> Hola Mundo en Django </h1>")
 
+
 @api_view(['GET'])
 def get_user(request):
     # Lista todos los Usuarios
-    
+
     # se buscan todos los registros guardados en la base
-    Usuarios = Usuario.objects.all() 
+    Usuarios = Usuario.objects.all()
     # cuando estás serializando múltiples instancias de un modelo
     serializer = serializers.UsuarioSerializer(Usuarios, many=True)
     # Response es una clase que me permite devolver una respuesta
@@ -45,11 +46,12 @@ def create_Usuario(request):
                 'errors': serializer.errors}
     return Response(data=response, status=status.HTTP_400_BAD_REQUEST)
 
+
 # ACA PUSE NUESTRA CLASE PARA QUE NO TIRE ERROR
 """@api_view(['GET'])
  def detail_movie(request, id):
     """
-    #Muestra una pelicula.
+# Muestra una pelicula.
 """
     try:
         # Se busca la pelicula en base por el id
@@ -64,7 +66,7 @@ def create_Usuario(request):
 @api_view(['DELETE'])
 def delete_movie(request, id):
     """
-    #Eliminar una pelicula.
+# Eliminar una pelicula.
 """
     try:
         movie = Movie.objects.get(pk=id)
@@ -78,7 +80,7 @@ def delete_movie(request, id):
 @api_view(['PUT'])
 def update_movie(request, id):
     """
-    #Actualiza una pelicula.
+# Actualiza una pelicula.
 """
     try:
         movie = Movie.objects.get(pk=id)
@@ -97,4 +99,4 @@ def update_movie(request, id):
                 'message': 'No se pudo modificar la pelicula',
                 'errors': serializer.errors}
     return Response(data=response, status=status.HTTP_400_BAD_REQUEST)
- """ 
+ """
